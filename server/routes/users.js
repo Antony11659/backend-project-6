@@ -13,6 +13,24 @@ export default (app) => {
       const user = new app.objection.models.user();
       reply.render('users/new', { user });
     })
+    .get('/users/:id/edit', { name: 'editUser' }, async (req, reply) => {
+      const user = await app.objection.models.user.query().findById(req.params.id);
+      reply.render('users/edit', { user });
+      return reply;
+    })
+    .patch('/users/:id', { name: 'updateUser' }, async (req, reply) => {
+      const user = await app.objection.models.user.query().findById(req.params.id);
+      const updatedUeser = new app.objection.models.user(user);
+      updatedUeser.$set(req.body.data);
+
+      try {
+        await updatedUeser.$quary().update();
+        reply.redirect('users/index');
+      } catch (err) {
+        reply.send(err.message);
+      }
+      return reply;
+    })
     .post('/users', async (req, reply) => {
       const user = new app.objection.models.user();
       user.$set(req.body.data);

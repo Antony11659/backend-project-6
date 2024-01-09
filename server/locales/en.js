@@ -32,17 +32,33 @@ export default {
     views: {
       session: {
         new: {
-          signIn: 'Login',
+          signIn: {
+            login: 'Login',
+            email: 'email',
+            password: 'password',
+          },
           submit: 'Login',
         },
       },
       users: {
         id: 'ID',
         email: 'Email',
+        fullName: 'Full Name',
+        actions: {
+          action: 'Actions',
+          change: 'Сhange',
+          delete: 'Вelete',
+        },
         createdAt: 'Created at',
         new: {
           submit: 'Register',
-          signUp: 'Register',
+          signUp: {
+            register: 'Register',
+            firstName: 'firstName',
+            lastName: 'lastName',
+            password: 'password',
+            email: 'email',
+          },
         },
       },
       welcome: {

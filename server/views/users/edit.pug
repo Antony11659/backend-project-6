@@ -1,0 +1,9 @@
+extends ../layouts/application.pug
+
+block content
+  +formFor()(action=route('users') method='patch')
+    +input(user, 'fistName')(type="text")
+    +input(user, 'lastName')(type="text")
+    +input(user, 'email')(type="email")
+    +input(user, 'password')(type="password")
+    +submit.btn.btn-primary(user)(value=t('views.users.actions.change'))
