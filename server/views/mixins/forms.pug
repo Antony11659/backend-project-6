@@ -29,3 +29,8 @@ mixin buttonTo(action, method)
   form(action=action, method="post")
     input(name="_method" type="hidden" value=method)
     input(type='submit')&attributes(attributes)
+    
+mixin submitPatch()
+  .form-group
+    input(name="_method" type="hidden" value="patch")
+    input(class='btn btn-primary' type='submit')&attributes(attributes)

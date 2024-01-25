@@ -1,7 +1,7 @@
 // @ts-check
 
-const BaseModel = require('./BaseModel.cjs');
 const objectionUnique = require('objection-unique');
+const BaseModel = require('./BaseModel.cjs');
 const encrypt = require('../lib/secure.cjs');
 
 const unique = objectionUnique({ fields: ['email'] });
@@ -21,6 +21,8 @@ module.exports = class User extends unique(BaseModel) {
         lastName: { type: 'string', minLength: 1 },
         email: { type: 'string', minLength: 1 },
         password: { type: 'string', minLength: 3 },
+        createdAt: { type: 'string' },
+        updatedAt: { type: 'string' },
       },
     };
   }

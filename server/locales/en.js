@@ -18,6 +18,14 @@ export default {
           error: 'Failed to register',
           success: 'User registered successfully',
         },
+        update: {
+          error: 'Failed to update User',
+          success: 'User updated successfully',
+        },
+        delete: {
+          error: 'Failed to delete',
+          success: 'User deleted',
+        },
       },
       authError: 'Access denied! Please login',
     },
@@ -47,7 +55,7 @@ export default {
         actions: {
           action: 'Actions',
           change: 'Сhange',
-          delete: 'Вelete',
+          delete: 'Delete',
         },
         createdAt: 'Created at',
         new: {

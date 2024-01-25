@@ -1,9 +1,13 @@
 extends ../layouts/application.pug
 
+block header
+  = t('views.users.new.signUp.register')
+
 block content
-  +formFor()(action=route('users') method='patch')
-    +input(user, 'fistName')(type="text")
-    +input(user, 'lastName')(type="text")
-    +input(user, 'email')(type="email")
-    +input(user, 'password')(type="password")
-    +submit.btn.btn-primary(user)(value=t('views.users.actions.change'))
+  form(action=`/users/${user.id}` method='post')
+    input(type='hidden' name='_method' value='patch')
+    +input(user, t('views.users.new.signUp.firstName'))(type="text")
+    +input(user, t('views.users.new.signUp.lastName'))(type="text")
+    +input(user, t('views.users.new.signUp.email'))(type="email")
+    +input(user, t('views.users.new.signUp.password'))(type="password")
+    input.btn.btn-outline-primary(type='submit' value=t('views.users.actions.change'))

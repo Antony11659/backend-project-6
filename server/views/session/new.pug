@@ -7,4 +7,4 @@ block content
   +formFor()(action=route('session') method='post')
     +input(signInForm, t('views.session.new.signIn.email'), errors)(type="text")
     +input(signInForm, t('views.session.new.signIn.password'))(type="password")
-    +submit(signInForm)(value=t('views.session.new.submit'))
+    +submit(signInForm)(value=t('views.session.new.submit'), type="submit")
