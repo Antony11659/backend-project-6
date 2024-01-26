@@ -37,6 +37,12 @@ export default (app) => {
     .patch('/users/:id', async (req, reply) => {
       const validUser = await app.objection.models.user.fromJson(req.body.data);
       const user = await app.objection.models.user.query().findById(req.params.id);
+      if (!req.isAuthenticated()) {
+        req.flash('error', i18next.t('flash.authError'));
+        reply.redirect('/session/new');
+        return reply;
+      }
+
       try {
         await user.$query().patch(validUser);
         req.flash('info', i18next.t('flash.users.update.success'));
@@ -48,10 +54,20 @@ export default (app) => {
       return reply;
     })
     .delete('/users/:id', async (req, reply) => {
-      try {
-        await app.objection.models.user.query.findById(req.params.id).delete();
-      } catch (err) {
-        reply.send('some error occurs');
+      if (!req.isAuthenticated()) {
+        req.flash('error', i18next.t('flash.authError'));
+        reply.redirect('/session/new');
+        return reply;
       }
+
+      try {
+        await app.objection.models.user.query().deleteById(req.params.id);
+        req.flash('info', i18next.t('flash.users.delete.success'));
+        reply.redirect('/users');
+      } catch (err) {
+        req.flash('info', i18next.t('flash.users.delete.error'));
+        reply.send(err.message);
+      }
+      return reply;
     });
 };

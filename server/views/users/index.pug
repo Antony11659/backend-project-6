@@ -20,5 +20,7 @@ block content
           td= formatDate(user.createdAt)
           td
             form(action=`/users/${user.id}/edit` method='get')
-              input.btn.btn-outline-danger(type='submit' value=t('views.users.actions.delete'))
               input.btn.btn-outline-primary(type='submit' value=t('views.users.actions.change'))
+            form(action=`/users/${user.id}` method='post')
+              input(type='hidden' name='_method' value='delete')
+              input.btn.btn-outline-danger(type='submit' value=t('views.users.actions.delete'))
