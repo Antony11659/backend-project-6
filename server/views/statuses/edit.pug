@@ -1,0 +1,8 @@
+extends ../layouts/application.pug
+
+block content
+  h1= t('views.statuses.actions.change')
+    +formFor()(action=`/statuses/${status.id}` method='post')
+      +input(status, "name")(type="text", value=status.name)
+      +buttonTo(`/statuses/${status.id}`, 'patch')(class="btn btn-primary" value=t('views.statuses.actions.change'))
+    

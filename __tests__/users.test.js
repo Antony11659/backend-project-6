@@ -1,4 +1,5 @@
-// @ts-check
+/* eslint-disable quotes */
+// @ts-nocheck
 
 import _ from "lodash";
 import fastify from "fastify";
@@ -6,7 +7,7 @@ import fastify from "fastify";
 import init from "../server/plugin.js";
 import encrypt from "../server/lib/secure.cjs";
 import { getTestData, prepareData } from "./helpers/index.js";
-import createUser from "../__fixtures__/testData.js";
+import { createUser } from "../__fixtures__/testData.js";
 
 describe("test users CRUD", () => {
   let app;
