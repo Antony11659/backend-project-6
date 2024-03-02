@@ -5,6 +5,17 @@ module.exports = class Status extends BaseModel {
     return "statuses";
   }
 
+  static relationMappings = {
+    tasks: {
+      relation: Model.HasManyRelation,
+      modelClass: Task,
+      join: {
+        from: "statuses.id",
+        to: "tasks.statusId",
+      },
+    },
+  };
+
   static get jsonSchema() {
     return {
       type: "object",

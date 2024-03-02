@@ -11,6 +11,17 @@ module.exports = class User extends unique(BaseModel) {
     return "users";
   }
 
+  static relationMappings = {
+    tasks: {
+      relation: Model.HasManyRelation,
+      modelClass: Task,
+      join: {
+        from: "users.id",
+        to: "tasks.creatorId",
+      },
+    },
+  };
+
   static get jsonSchema() {
     return {
       type: "object",
