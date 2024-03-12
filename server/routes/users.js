@@ -60,9 +60,20 @@ export default (app) => {
       return reply;
     })
     .delete("/users/:id", async (req, reply) => {
+      const task = await app.objection.models.tasks
+        .query()
+        .where("creatorId", req.params.id);
+      const userHasTask = task.length > 0;
+
       if (!req.isAuthenticated()) {
         req.flash("error", i18next.t("flash.authError"));
         reply.redirect("/session/new");
+        return reply;
+      }
+
+      if (userHasTask) {
+        req.flash("error", i18next.t("flash.userHasTaskError"));
+        reply.redirect("/tasks");
         return reply;
       }
 

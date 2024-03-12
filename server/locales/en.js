@@ -42,7 +42,23 @@ export default {
           success: "Status deleted",
         },
       },
+      tasks: {
+        create: {
+          error: "Failed to register",
+          success: "Task registered successfully",
+        },
+        update: {
+          error: "Failed to update",
+          success: "Task updated successfully",
+        },
+        delete: {
+          error:
+            "Failed to delete! Only the User who created the task can delete it!",
+          success: "Task deleted",
+        },
+      },
       authError: "Access denied! Please login",
+      userHasTaskError: "Failed to delete User has task",
     },
     layouts: {
       application: {
@@ -51,6 +67,7 @@ export default {
         signUp: "Register",
         signOut: "Logout",
         statuses: "Statuses",
+        tasks: "Tasks",
       },
     },
     views: {
@@ -98,6 +115,31 @@ export default {
         new: {
           value: "Status name",
           creationStatus: "Creation a status",
+          button: "Create",
+        },
+      },
+      tasks: {
+        id: "ID",
+        name: "Name",
+        createdAt: "Created at",
+        creator: "Creator",
+        status: "Status",
+        executor: "Executor",
+        label: "Labels",
+        creation: "Creation a task",
+        actions: {
+          action: "Action",
+          change: "Change task",
+          delete: "Delete",
+          create: "Create task",
+        },
+        new: {
+          creator: "Creator",
+          value: "Name",
+          description: "Description",
+          status: "Status",
+          executor: "Executor",
+          label: "Labels",
           button: "Create",
         },
       },

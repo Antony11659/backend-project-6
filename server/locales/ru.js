@@ -42,7 +42,23 @@ export default {
           success: "Статус удален",
         },
       },
+      tasks: {
+        create: {
+          error: "Не удалось зарегистрировать",
+          success: "Задача успешно зарегистрирована",
+        },
+        update: {
+          error: "Не удалось обновить",
+          success: "Задача успешно обновлена",
+        },
+        delete: {
+          error:
+            "Не удалось удалить! Удалить задачу может только тот пользователь, который ее создал!",
+          success: "Задача удалена",
+        },
+      },
       authError: "Доступ запрещён! Пожалуйста, авторизируйтесь.",
+      userHasTaskError: "Не удалось удалить пользователя, у него есть задача",
     },
     layouts: {
       application: {
@@ -51,6 +67,7 @@ export default {
         signUp: "Регистрация",
         signOut: "Выход",
         statuses: "Статусы",
+        tasks: "Задачи",
       },
     },
     views: {
@@ -98,6 +115,31 @@ export default {
         new: {
           value: "Наименование",
           creationStatus: "Создание статуса",
+          button: "Создать",
+        },
+      },
+      tasks: {
+        id: "ID",
+        name: "Наименование",
+        createdAt: "Дата создания",
+        creator: "Автор",
+        status: "Статус",
+        executor: "Исполнитель",
+        label: "Метки",
+        creation: "Создание задачи",
+        actions: {
+          action: "Действия",
+          change: "Изменить задачу",
+          delete: "Удалить",
+          create: "Создать задачу",
+        },
+        new: {
+          creator: "Автор",
+          value: "Наименование",
+          description: "Описание",
+          status: "Статус",
+          executor: "Исполнитель",
+          label: "Метки",
           button: "Создать",
         },
       },

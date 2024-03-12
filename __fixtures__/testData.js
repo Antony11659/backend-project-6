@@ -10,5 +10,14 @@ const createUser = () => ({
 const createStatus = () => ({
   name: faker.lorem.word({ length: { min: 5, max: 7 }, strategy: "fail" }),
 });
-
-export { createUser, createStatus };
+const createTask = (creatorId, statusId) => ({
+  name: faker.word.adjective({ length: { min: 5, max: 7 }, strategy: "fail" }),
+  description: faker.word.adjective({
+    length: { min: 5, max: 70 },
+    strategy: "any-length",
+  }),
+  creatorId,
+  statusId,
+  executorId: creatorId,
+});
+export { createUser, createStatus, createTask };

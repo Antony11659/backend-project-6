@@ -1,6 +1,6 @@
-import { Model } from "objection";
-
 const BaseModel = require("./BaseModel.cjs");
+const User = require("./User.cjs");
+const Status = require("./Status.cjs");
 
 module.exports = class Tasks extends BaseModel {
   static get tableName() {
@@ -9,7 +9,7 @@ module.exports = class Tasks extends BaseModel {
 
   static relationMappings = {
     users: {
-      relation: Model.BelongsToOneRelation,
+      relation: BaseModel.BelongsToOneRelation,
       modelClass: User,
       join: {
         from: "users.id",
@@ -17,11 +17,19 @@ module.exports = class Tasks extends BaseModel {
       },
     },
     statuses: {
-      relation: Model.BelongsToOneRelation,
+      relation: BaseModel.BelongsToOneRelation,
       modelClass: Status,
       join: {
         from: "statuses.id",
         to: "tasks.statusId",
+      },
+    },
+    executor: {
+      relation: BaseModel.BelongsToOneRelation,
+      modelClass: User,
+      join: {
+        from: "users.id",
+        to: "tasks.executorId",
       },
     },
   };
@@ -29,10 +37,14 @@ module.exports = class Tasks extends BaseModel {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["name", "statusId", "creatorId "],
+      required: ["name", "statusId", "creatorId"],
       properties: {
         id: { type: "integer" },
         name: { type: "string", minLength: 1 },
+        description: { type: "string" },
+        statusId: { type: "integer" },
+        creatorId: { type: "integer" },
+        executorId: { type: "integer" },
       },
     };
   }

@@ -1,4 +1,5 @@
 const BaseModel = require("./BaseModel.cjs");
+const Task = require("./Task.cjs");
 
 module.exports = class Status extends BaseModel {
   static get tableName() {
@@ -7,7 +8,7 @@ module.exports = class Status extends BaseModel {
 
   static relationMappings = {
     tasks: {
-      relation: Model.HasManyRelation,
+      relation: BaseModel.HasManyRelation,
       modelClass: Task,
       join: {
         from: "statuses.id",

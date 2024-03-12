@@ -5,14 +5,14 @@ mixin formFor(entity = null)
   form&attributes(attributes)
     block
 
-mixin input(entity, propertyName, errors = {})
+mixin input(entity, propertyName, formName = null, errors = {})
   - propertyErrors = _.get(errors, propertyName)
   - classLine = 'form-control' + (_.isEmpty(propertyErrors) ? '' : ' is-invalid')
   - inputId = getInputId(propertyName)
   .mb-3(class=(errors[propertyName] && 'has-danger'))
     label(
       for= inputId
-    )= propertyName
+    )= formName !== null ? formName : propertyName
     input(
       id= inputId
       name=getInputName(propertyName)
@@ -30,7 +30,19 @@ mixin buttonTo(action, method)
     input(name="_method" type="hidden" value=method)
     input(type='submit')&attributes(attributes)
     
-mixin submitPatch()
-  .form-group
-    input(name="_method" type="hidden" value="patch")
-    input(class='btn btn-primary' type='submit')&attributes(attributes)
+
+
+mixin select(entity, propertyName, taskKey, formName)
+  - classLine = 'form-select'
+  - inputId = getInputId(propertyName)
+  - selectName = getInputName(taskKey)
+  .input-group.mb-3
+    label.input-group-text(
+      for= inputId
+    )= formName
+    select(id= inputId class=classLine name=selectName)
+      option(selected='')
+      for el in entity
+        option(
+          value= _.get(el, 'id', '')
+        )= _.get(el, propertyName, '')

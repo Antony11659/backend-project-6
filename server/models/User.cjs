@@ -1,5 +1,5 @@
 // @ts-check
-
+const Tasks = require("./Task.cjs");
 const objectionUnique = require("objection-unique");
 const BaseModel = require("./BaseModel.cjs");
 const encrypt = require("../lib/secure.cjs");
@@ -13,8 +13,8 @@ module.exports = class User extends unique(BaseModel) {
 
   static relationMappings = {
     tasks: {
-      relation: Model.HasManyRelation,
-      modelClass: Task,
+      relation: BaseModel.BelongsToOneRelation,
+      modelClass: Tasks,
       join: {
         from: "users.id",
         to: "tasks.creatorId",
