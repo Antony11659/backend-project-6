@@ -42,6 +42,20 @@ export default {
           success: "Статус удален",
         },
       },
+      labels: {
+        create: {
+          error: "Не удалось зарегистрировать",
+          success: "Метка успешно зарегистрирована",
+        },
+        update: {
+          error: "Не удалось обновить",
+          success: "Метка успешно обновлена",
+        },
+        delete: {
+          error: "Не удалось удалить",
+          success: "Метка удалена",
+        },
+      },
       tasks: {
         create: {
           error: "Не удалось зарегистрировать",
@@ -68,6 +82,7 @@ export default {
         signOut: "Выход",
         statuses: "Статусы",
         tasks: "Задачи",
+        labels: "Метки",
       },
     },
     views: {
@@ -115,6 +130,22 @@ export default {
         new: {
           value: "Наименование",
           creationStatus: "Создание статуса",
+          button: "Создать",
+        },
+      },
+      labels: {
+        id: "ID",
+        name: "Наименование",
+        createdAt: "Дата создания",
+        actions: {
+          action: "Действия",
+          change: "Изменить",
+          delete: "Удалить",
+          create: "Создать Метку",
+        },
+        new: {
+          value: "Наименование",
+          creationLabel: "Создание метки",
           button: "Создать",
         },
       },

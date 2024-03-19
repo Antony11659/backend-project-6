@@ -42,6 +42,20 @@ export default {
           success: "Status deleted",
         },
       },
+      labels: {
+        create: {
+          error: "Failed to register",
+          success: "Label registered successfully",
+        },
+        update: {
+          error: "Failed to update",
+          success: "Label updated successfully",
+        },
+        delete: {
+          error: "Failed to delete",
+          success: "Label deleted",
+        },
+      },
       tasks: {
         create: {
           error: "Failed to register",
@@ -68,6 +82,7 @@ export default {
         signOut: "Logout",
         statuses: "Statuses",
         tasks: "Tasks",
+        labels: "Labels",
       },
     },
     views: {
@@ -87,7 +102,7 @@ export default {
         fullName: "Full Name",
         actions: {
           action: "Actions",
-          change: "Сhange",
+          change: "Change",
           delete: "Delete",
         },
         createdAt: "Created at",
@@ -108,13 +123,29 @@ export default {
         createdAt: "Created at",
         actions: {
           action: "Actions",
-          change: "Сhange",
+          change: "Change",
           delete: "Delete",
           create: "Create status",
         },
         new: {
           value: "Status name",
           creationStatus: "Creation a status",
+          button: "Create",
+        },
+      },
+      labels: {
+        id: "ID",
+        name: "Name",
+        createdAt: "Created at",
+        actions: {
+          action: "Actions",
+          change: "Change",
+          delete: "Delete",
+          create: "Create label",
+        },
+        new: {
+          value: "Label name",
+          creationLabel: "Creation new label",
           button: "Create",
         },
       },
