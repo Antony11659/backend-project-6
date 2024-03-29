@@ -89,7 +89,7 @@ export default (app) => {
       { preValidation: app.authenticate },
       async (req, reply) => {
         // don't forget to implement the logic " if a task
-        // has the connection with a label it is impossible to delete a lebel"
+        // has the connection with a label it is impossible to delete a label"
         try {
           await app.objection.models.labels.query().deleteById(req.params.id);
           req.flash("info", i18next.t("flash.labels.delete.success"));

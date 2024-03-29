@@ -36,11 +36,12 @@ mixin select(entity, propertyName, taskKey, formName)
   - classLine = 'form-select'
   - inputId = getInputId(propertyName)
   - selectName = getInputName(taskKey)
+  - isMultiple =  taskKey === 'labels' ? true : false
   .input-group.mb-3
     label.input-group-text(
       for= inputId
     )= formName
-    select(id= inputId class=classLine name=selectName)
+    select(id= inputId class=classLine name=selectName multiple=isMultiple)
       option(selected='')
       for el in entity
         option(

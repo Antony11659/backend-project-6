@@ -40,8 +40,8 @@ module.exports = class Tasks extends BaseModel {
       join: {
         from: "tasks.id",
         through: {
-          from: "task_label_relation.tasks_id",
-          to: "task_label_relation.labels_id",
+          from: "tasks_labels.task_id",
+          to: "tasks_labels.label_id",
         },
         to: "labels.Id",
       },
