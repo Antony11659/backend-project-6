@@ -42,7 +42,7 @@ export default (app) => {
           req.flash("info", i18next.t("flash.statuses.create.success"));
           reply.redirect("/statuses");
         } catch (err) {
-          req.flash("info", i18next.t("flash.statuses.create.error"));
+          req.flash("error", i18next.t("flash.statuses.create.error"));
           reply.send(err.message);
         }
         return reply;
@@ -79,7 +79,7 @@ export default (app) => {
           req.flash("info", i18next.t("flash.statuses.update.success"));
           reply.redirect("/statuses");
         } catch (err) {
-          req.flash("info", i18next.t("flash.statuses.update.error"));
+          req.flash("error", i18next.t("flash.statuses.update.error"));
           reply.send(err.message);
         }
         return reply;
@@ -89,12 +89,22 @@ export default (app) => {
       "/statuses/:id",
       { preValidation: app.authenticate },
       async (req, reply) => {
+        const status = await app.objection.models.status
+          .query()
+          .findById(req.params.id);
+        const tasks = await status.$relatedQuery("tasks");
+        const isTaskHasStatus = tasks.length > 0;
+        if (isTaskHasStatus) {
+          req.flash("error", i18next.t("flash.statuses.delete.error"));
+          reply.redirect("/statuses");
+          return reply;
+        }
         try {
           await app.objection.models.status.query().deleteById(req.params.id);
           req.flash("info", i18next.t("flash.statuses.delete.success"));
           reply.redirect("/statuses");
         } catch (err) {
-          req.flash("info", i18next.t("flash.statuses.delete.error"));
+          req.flash("error", i18next.t("flash.statuses.delete.error"));
           reply.send(err.message);
         }
         return reply;

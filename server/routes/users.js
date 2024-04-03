@@ -82,7 +82,7 @@ export default (app) => {
         req.flash("info", i18next.t("flash.users.delete.success"));
         reply.redirect("/users");
       } catch (err) {
-        req.flash("info", i18next.t("flash.users.delete.error"));
+        req.flash("error", i18next.t("flash.users.delete.error"));
         reply.send(err.message);
       }
       return reply;

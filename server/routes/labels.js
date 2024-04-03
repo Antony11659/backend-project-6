@@ -78,7 +78,7 @@ export default (app) => {
           req.flash("info", i18next.t("flash.labels.update.success"));
           reply.redirect("/labels");
         } catch (err) {
-          req.flash("info", i18next.t("flash.labels.update.error"));
+          req.flash("error", i18next.t("flash.labels.update.error"));
           reply.send(err.message);
         }
         return reply;
@@ -88,14 +88,22 @@ export default (app) => {
       "/labels/:id",
       { preValidation: app.authenticate },
       async (req, reply) => {
-        // don't forget to implement the logic " if a task
-        // has the connection with a label it is impossible to delete a label"
+        const label = await app.objection.models.labels
+          .query()
+          .findById(req.params.id);
+        const task = await label.$relatedQuery("tasks");
+        const isTaskHasLabel = task.length > 0;
+        if (isTaskHasLabel) {
+          req.flash("error", i18next.t("flash.labels.delete.error"));
+          reply.redirect("/labels");
+          return reply;
+        }
         try {
           await app.objection.models.labels.query().deleteById(req.params.id);
           req.flash("info", i18next.t("flash.labels.delete.success"));
           reply.redirect("/labels");
         } catch (err) {
-          req.flash("info", i18next.t("flash.labels.delete.error"));
+          req.flash("error", i18next.t("flash.labels.delete.error"));
           reply.send(err.message);
         }
         return reply;

@@ -1,5 +1,5 @@
+const path = require("path");
 const BaseModel = require("./BaseModel.cjs");
-const Task = require("./Task.cjs");
 
 module.exports = class Status extends BaseModel {
   static get tableName() {
@@ -9,7 +9,7 @@ module.exports = class Status extends BaseModel {
   static relationMappings = {
     tasks: {
       relation: BaseModel.HasManyRelation,
-      modelClass: Task,
+      modelClass: path.join(__dirname, "Task.cjs"),
       join: {
         from: "statuses.id",
         to: "tasks.statusId",

@@ -8,5 +8,5 @@ block content
       +input(task, 'description', t('views.tasks.new.description'))(type='text',value=task.description)
       +select(statuses, 'name','statusId', t('views.tasks.new.status'), )
       +select(users, 'firstName','executorId', t('views.tasks.new.executor'),)
+      +select(labels, 'name', 'labels', t('views.tasks.new.label'))
       +buttonTo(`/statuses/${task.id}`, 'patch')(class="btn btn-primary" value=t('views.tasks.actions.change'))
-    //-   +input(tasks, '')(type="text", value=t('views.tasks.new.label'))
