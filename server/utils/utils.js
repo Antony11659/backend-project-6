@@ -4,6 +4,11 @@ const getValue = (entity, id, propertyValue) => {
 };
 
 const insertLabels = async (labels, task, trx) => {
+  if (labels.length === 1) {
+    const label = labels[0];
+    await task.$relatedQuery("labels", trx).relate([label]);
+    return;
+  }
   const result = labels.map(async (label) =>
     task.$relatedQuery("labels", trx).relate([label])
   );

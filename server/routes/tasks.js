@@ -104,8 +104,8 @@ export default (app) => {
           const task = await app.objection.models.tasks
             .query(trx)
             .findById(req.params.id);
-          await task.$query(trx).patch(validTask);
           await task.$relatedQuery("labels", trx).unrelate();
+          await task.$query(trx).patch(validTask);
           await insertLabels(labels, task, trx);
           req.flash("info", i18next.t("flash.tasks.update.success"));
           reply.redirect("/tasks");
@@ -113,7 +113,7 @@ export default (app) => {
         } catch ({ data }) {
           await trx.rollback();
           req.flash("error", i18next.t("flash.tasks.update.error"));
-          reply.render("/tasks/edit", { errors: data });
+          reply.redirect(`/tasks/${req.params.id}/edit`, { errors: data });
         }
         return reply;
       }

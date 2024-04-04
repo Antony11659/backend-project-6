@@ -8,11 +8,9 @@ export const up = (knex) =>
     table.integer("executor_id");
     table.integer("creator_id");
     table.integer("status_id");
-    table.integer("label_id");
     table.foreign("executor_id ").references("id").inTable("users");
     table.foreign("creator_id  ").references("id").inTable("users");
     table.foreign("status_id ").references("id").inTable("statuses");
-    table.foreign("label_id ").references("id").inTable("labels");
   });
 
 export const down = (knex) => knex.schema.dropTable("tasks");
