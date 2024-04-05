@@ -3,10 +3,10 @@
 
 import fastify from "fastify";
 import init from "../server/plugin.js";
+import { createLabel } from "../__fixtures__/testData.js";
 import logIn from "./helpers/index.js";
-import { createTask } from "../__fixtures__/testData.js";
 
-describe("test tasks", () => {
+describe("test labels", () => {
   let app;
   let knex;
   let cookie;
@@ -23,95 +23,92 @@ describe("test tasks", () => {
   });
 
   // beforeEach(async () => {
-  //   await knex("tasks").truncate();
-  //   await knex("tasks_labels").truncate();
+  // await knex.migrate.latest();
+  // cookie = await logIn(app);
+  // await knex("labels").truncate();
   // });
 
-  it("get tasks", async () => {
+  it("get label", async () => {
     const response = await app.inject({
       method: "get",
-      url: `/tasks`,
+      url: `/labels`,
       cookies: cookie,
     });
     expect(response.statusCode).toBe(200);
   });
 
-  it("new task", async () => {
+  it("new label", async () => {
     const response = await app.inject({
       method: "get",
-      url: "/tasks/new",
+      url: "/labels/new",
       cookies: cookie,
     });
 
     expect(response.statusCode).toBe(200);
   });
 
-  it("create task", async () => {
-    const newTask = createTask();
+  it("create label", async () => {
+    const label = createLabel();
 
     const response = await app.inject({
       method: "post",
-      url: "/tasks",
+      url: "/labels",
       payload: {
-        data: newTask,
+        data: label,
       },
       cookies: cookie,
     });
     expect(response.statusCode).toBe(302);
-    const addedTask = await app.objection.models.tasks
+    const addedLabel = await app.objection.models.labels
       .query()
-      .findOne({ name: newTask.name });
-    expect(addedTask.name).toBe(newTask.name);
+      .findOne({ name: label.name });
+    expect(addedLabel.name).toBe(label.name);
   });
 
-  it("update task", async () => {
-    const oldTask = createTask();
-    await app.objection.models.tasks.query().insert(oldTask);
-
+  it("update label", async () => {
+    const oldLabel = createLabel();
+    await app.objection.models.labels.query().insert(oldLabel);
     const newValue = { name: "newValue" };
-
-    const updateParams = { ...oldTask, ...newValue };
-
-    const { id } = await app.objection.models.tasks
+    const { id } = await app.objection.models.labels
       .query()
-      .findOne({ name: oldTask.name });
+      .findOne({ name: oldLabel.name });
 
     const response = await app.inject({
       method: "patch",
-      url: `/tasks/${id}`,
+      url: `/labels/${id}`,
       payload: {
-        data: updateParams,
+        data: newValue,
       },
       cookies: cookie,
     });
-
-    const newTask = await app.objection.models.tasks.query().findOne({ id });
-
+    const newLabel = await app.objection.models.labels.query().findOne({ id });
     expect(response.statusCode).toBe(302);
-    expect(newValue.name).toBe(newTask.name);
+    expect(newValue.name).toBe(newLabel.name);
   });
 
-  it("delete task", async () => {
-    const task = createTask();
-    await app.objection.models.tasks.query().insert(task);
-    const { id } = await app.objection.models.tasks
+  it("delete label", async () => {
+    const label = createLabel();
+    await app.objection.models.labels.query().insert(label);
+    const { id } = await app.objection.models.labels
       .query()
-      .findOne({ name: task.name });
+      .findOne({ name: label.name });
 
     const response = await app.inject({
       method: "delete",
-      url: `/tasks/${id}`,
+      url: `/labels/${id}`,
       cookies: cookie,
     });
     expect(response.statusCode).toBe(302);
     expect(
-      await app.objection.models.tasks.query().findOne({ id })
+      await app.objection.models.labels.query().findById(id)
     ).toBeUndefined();
   });
 
   afterEach(async () => {
-    await knex("tasks").truncate();
-    await knex("tasks_labels").truncate();
+    // Пока Segmentation fault: 11
+    // после каждого теста откатываем миграции
+    // await knex.migrate.rollback();
+    await knex("labels").truncate();
   });
 
   afterAll(async () => {

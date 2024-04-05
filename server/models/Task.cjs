@@ -1,7 +1,5 @@
+const path = require("path");
 const BaseModel = require("./BaseModel.cjs");
-const User = require("./User.cjs");
-const Status = require("./Status.cjs");
-const Label = require("./Label.cjs");
 
 module.exports = class Tasks extends BaseModel {
   static get tableName() {
@@ -11,7 +9,7 @@ module.exports = class Tasks extends BaseModel {
   static relationMappings = {
     users: {
       relation: BaseModel.BelongsToOneRelation,
-      modelClass: User,
+      modelClass: path.join(__dirname, "User.cjs"),
       join: {
         from: "users.id",
         to: "tasks.creatorId",
@@ -19,7 +17,7 @@ module.exports = class Tasks extends BaseModel {
     },
     statuses: {
       relation: BaseModel.BelongsToOneRelation,
-      modelClass: Status,
+      modelClass: path.join(__dirname, "Status.cjs"),
       join: {
         from: "statuses.id",
         to: "tasks.statusId",
@@ -27,7 +25,7 @@ module.exports = class Tasks extends BaseModel {
     },
     executor: {
       relation: BaseModel.BelongsToOneRelation,
-      modelClass: User,
+      modelClass: path.join(__dirname, "User.cjs"),
       join: {
         from: "users.id",
         to: "tasks.executorId",
@@ -36,7 +34,7 @@ module.exports = class Tasks extends BaseModel {
 
     labels: {
       relation: BaseModel.ManyToManyRelation,
-      modelClass: Label,
+      modelClass: path.join(__dirname, "Label.cjs"),
       join: {
         from: "tasks.id",
         through: {

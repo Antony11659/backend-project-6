@@ -3,13 +3,12 @@
 
 import fastify from "fastify";
 import init from "../server/plugin.js";
-import { getTestData, prepareData } from "./helpers/index.js";
 import { createStatus } from "../__fixtures__/testData.js";
+import logIn from "./helpers/index.js";
 
 describe("test status", () => {
   let app;
   let knex;
-  let testData;
   let cookie;
 
   beforeAll(async () => {
@@ -20,21 +19,12 @@ describe("test status", () => {
     await init(app);
     knex = app.objection.knex;
     await knex.migrate.latest();
-    await prepareData(app);
-    testData = getTestData();
-
-    const login = await app.inject({
-      method: "POST",
-      url: app.reverse("session"),
-      payload: {
-        data: testData.users.existing,
-      },
-    });
-
-    const [sessionCookie] = login.cookies;
-    const { name, value } = sessionCookie;
-    cookie = { [name]: value };
+    cookie = await logIn(app);
   });
+
+  // beforeEach(async () => {
+  // await knex("statuses").truncate();
+  // });
 
   it("get status", async () => {
     const response = await app.inject({
@@ -111,9 +101,14 @@ describe("test status", () => {
       await app.objection.models.status.query().findOne({ id })
     ).toBeUndefined();
   });
-
+  afterEach(async () => {
+    //   // Пока Segmentation fault: 11
+    //   // после каждого теста откатываем миграции
+    //   // await knex.migrate.rollback();
+    await knex("statuses").truncate();
+  });
   afterAll(async () => {
-    // await knex.migrate.rollback();
+    await knex("users").truncate();
     await app.close();
   });
 });

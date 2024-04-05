@@ -37,7 +37,7 @@ export default (app) => {
       async (req, reply) => {
         const validLabel = new app.objection.models.labels();
         validLabel.$set(req.body.data);
-        console.log(validLabel);
+
         try {
           await app.objection.models.labels.query().insert(validLabel);
           req.flash("info", i18next.t("flash.labels.create.success"));

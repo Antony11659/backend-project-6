@@ -1,5 +1,5 @@
 // @ts-check
-const Tasks = require("./Task.cjs");
+const path = require("path");
 const objectionUnique = require("objection-unique");
 const BaseModel = require("./BaseModel.cjs");
 const encrypt = require("../lib/secure.cjs");
@@ -14,7 +14,7 @@ module.exports = class User extends unique(BaseModel) {
   static relationMappings = {
     tasks: {
       relation: BaseModel.BelongsToOneRelation,
-      modelClass: Tasks,
+      modelClass: path.join(__dirname, "Task.cjs"),
       join: {
         from: "users.id",
         to: "tasks.creatorId",

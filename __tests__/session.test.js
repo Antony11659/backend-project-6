@@ -2,12 +2,12 @@
 
 import fastify from "fastify";
 import init from "../server/plugin.js";
-import { getTestData, prepareData } from "./helpers/index.js";
+import { createUser } from "../__fixtures__/testData.js";
 
 describe("test session", () => {
+  const user = createUser();
   let app;
   let knex;
-  let testData;
 
   beforeAll(async () => {
     app = fastify({
@@ -17,8 +17,8 @@ describe("test session", () => {
     await init(app);
     knex = app.objection.knex;
     await knex.migrate.latest();
-    await prepareData(app);
-    testData = getTestData();
+
+    await app.objection.models.user.query().insert(user);
   });
 
   it("test sign in / sign out", async () => {
@@ -33,14 +33,11 @@ describe("test session", () => {
       method: "POST",
       url: app.reverse("session"),
       payload: {
-        data: testData.users.existing,
+        data: user,
       },
     });
-
     expect(responseSignIn.statusCode).toBe(302);
-    // после успешной аутентификации получаем куки из ответа,
-    // они понадобятся для выполнения запросов на маршруты требующие
-    // предварительную аутентификацию
+
     const [sessionCookie] = responseSignIn.cookies;
     const { name, value } = sessionCookie;
     const cookie = { [name]: value };
@@ -48,7 +45,7 @@ describe("test session", () => {
     const responseSignOut = await app.inject({
       method: "DELETE",
       url: app.reverse("session"),
-      // используем полученные ранее куки
+
       cookies: cookie,
     });
 
@@ -56,7 +53,6 @@ describe("test session", () => {
   });
 
   afterAll(async () => {
-    // await knex.migrate.rollback();
     await app.close();
   });
 });

@@ -55,7 +55,7 @@ export default (app) => {
       const taskName = { name: req.body.data.name };
       const { labels } = req.body.data;
       validTask.$set(validData);
-
+      console.log(req.body.data);
       try {
         await app.objection.models.tasks.query(trx).insert(validTask);
         const task = await app.objection.models.tasks
