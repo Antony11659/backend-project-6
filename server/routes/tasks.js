@@ -11,8 +11,12 @@ export default (app) => {
       "/tasks",
       { name: "tasks", preValidation: app.authenticate },
       async (req, reply) => {
+        const { statusId, creatorId, labelId } = reply.request.query;
+        console.log(statusId);
         try {
-          const tasks = await app.objection.models.tasks.query();
+          const tasks = await app.objection.models.tasks
+            .query()
+            .modify("byStatus", statusId);
           const users = await app.objection.models.user.query();
           const statuses = await app.objection.models.status.query();
           reply.render("tasks/index", {

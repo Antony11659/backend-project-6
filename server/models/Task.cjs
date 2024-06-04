@@ -6,6 +6,14 @@ module.exports = class Tasks extends BaseModel {
     return "tasks";
   }
 
+  static get modifiers() {
+    return {
+      byStatus(query, id) {
+        query.skipUndefined().where("statusId", id);
+      },
+    };
+  }
+
   static relationMappings = {
     users: {
       relation: BaseModel.BelongsToOneRelation,

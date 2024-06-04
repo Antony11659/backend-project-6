@@ -1,0 +1,6 @@
+.card.m-2.p-3.w-100.bg-light
+  .card-body.p-5.bg-light.row
+  form(action="/tasks", method="get")
+      +selectLine(statuses, 'name', 'statusId', 'status')
+      +selectLine(users, 'firstName', 'usersId', 'users')
+      button(type="submit") Submit

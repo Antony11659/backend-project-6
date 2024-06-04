@@ -3,7 +3,9 @@ extends ../layouts/application.pug
 block content
   h1= t('layouts.application.tasks')
   a.btn.btn-outline-primary(href=route('newTask'))= t('views.tasks.actions.create')
-  table.table.table-striped
+  include ./filter.pug
+ 
+  table.table.table-striped.m-2.col
     thead
       tr
         th= t('views.tasks.id')
@@ -25,5 +27,5 @@ block content
           td= task.createdAt
           td
             form(action= `/tasks/${task.id}/edit`, method='get')
-              input.btn.btn-outline-primary(type='submit' value=t('views.tasks.actions.change'))
-            +buttonTo(`/tasks/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.actions.delete'))
+              input.btn.btn-outline-primary.m-2(type='submit' value=t('views.tasks.actions.change'))
+              +buttonTo(`/tasks/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.actions.delete'))

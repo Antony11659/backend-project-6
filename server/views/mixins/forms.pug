@@ -47,3 +47,17 @@ mixin select(entity, propertyName, taskKey, formName)
         option(
           value= _.get(el, 'id', '')
         )= _.get(el, propertyName, '')
+
+mixin selectLine(entity, propertyName, selectName, formName)
+  - classLine = 'form-select'
+  - inputId = getInputId(propertyName)
+  .input-group.mb-3.col
+    label.input-group-text(
+      for= inputId
+    )= formName
+    select(id= inputId class=classLine name=selectName multiple=isMultiple)
+      option(selected='')
+      for el in entity
+        option(
+          value= _.get(el, 'id', '')
+        )= _.get(el, propertyName, '')
